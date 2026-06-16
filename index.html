@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freibad Rodheim – Design-Varianten · Förderverein Rettungsschwimmer e.V.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --water-deep:#0E5F4A;--water:#1D9E75;--water-light:#5DCAA5;--foam:#E4F5EE;
+    --sun:#F0A22A;--sun-deep:#C9821A;--sand:#F7F4EC;--paper:#fff;
+    --ink:#10332B;--ink-soft:#41594F;--line:rgba(16,51,43,.12);
+    --radius:14px;--radius-lg:22px;--maxw:1060px;
+    --shadow-sm:0 1px 2px rgba(16,51,43,.06);--shadow:0 20px 44px -24px rgba(16,51,43,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--sand);line-height:1.65;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.brand-name{font-family:"Sora",sans-serif;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:22px}
+  :focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+  .top{background:var(--water-deep);color:var(--foam);position:relative;overflow:hidden}
+  .top::before{content:"";position:absolute;inset:0;opacity:.45;background:radial-gradient(60% 60% at 15% 10%,rgba(93,202,165,.6),transparent 60%),radial-gradient(50% 60% at 90% 90%,rgba(14,95,74,.9),transparent 55%)}
+  .top-inner{position:relative;padding:54px 0 96px;max-width:660px}
+  .brand{display:inline-flex;align-items:center;gap:11px;margin-bottom:26px}
+  .brand .mark{width:38px;height:38px;border-radius:50%;background:var(--water);color:var(--foam);display:grid;place-items:center}
+  .brand .mark svg{width:21px;height:21px}
+  .brand-name{font-size:1.02rem;font-weight:600;color:#fff}
+  .brand small{display:block;font-family:"Inter";font-size:.7rem;font-weight:500;color:var(--water-light);letter-spacing:.02em}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--water-light);margin-bottom:14px}
+  .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 4px rgba(240,162,42,.25)}
+  h1{font-size:clamp(2.1rem,5.5vw,3.2rem);font-weight:700;color:#fff;line-height:1.08}
+  .top p{margin-top:16px;font-size:clamp(1rem,2.2vw,1.16rem);color:#cdeede;max-width:520px}
+  .wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;display:block}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:-56px;position:relative;z-index:5;padding-bottom:8px}
+  .variant{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
+  .variant:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .preview{height:150px;position:relative;overflow:hidden}
+
+  /* mini-preview: dunkel */
+  .p-dark{background:var(--water-deep)}
+  .p-dark .bar{position:absolute;top:14px;left:16px;right:16px;height:7px;border-radius:4px;background:rgba(255,255,255,.18)}
+  .p-dark .h{position:absolute;top:40px;left:16px;width:62%;height:13px;border-radius:5px;background:#fff;opacity:.92}
+  .p-dark .h2{position:absolute;top:60px;left:16px;width:44%;height:13px;border-radius:5px;background:var(--water-light)}
+  .p-dark .btn1{position:absolute;top:88px;left:16px;width:64px;height:18px;border-radius:9px;background:var(--sun)}
+  .p-dark .wv{position:absolute;left:0;right:0;bottom:0;height:30px;background:var(--sand);border-radius:60% 60% 0 0/22px}
+  .p-dark .card{position:absolute;bottom:8px;left:24px;right:24px;height:24px;border-radius:8px;background:#fff;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
+
+  /* mini-preview: hell */
+  .p-light{background:linear-gradient(180deg,#9BD6EF,#E8F7FC 60%,#1F97C2 60%,#0E5F4A)}
+  .p-light .sun{position:absolute;top:16px;right:22px;width:34px;height:34px;border-radius:50%;background:#FFD45E}
+  .p-light .h{position:absolute;top:30px;left:16px;width:58%;height:13px;border-radius:5px;background:#10332B}
+  .p-light .h2{position:absolute;top:50px;left:16px;width:40%;height:11px;border-radius:5px;background:#1F97C2}
+  .p-light .btn1{position:absolute;top:74px;left:16px;width:60px;height:18px;border-radius:9px;background:#FFC53D}
+  .p-light .card{position:absolute;bottom:8px;left:20px;right:20px;height:26px;border-radius:9px;background:#fff;box-shadow:0 10px 20px -10px rgba(16,51,43,.5)}
+
+  /* mini-preview: slider */
+  .p-slider{background:linear-gradient(135deg,#5DCAA5,#0E5F4A)}
+  .p-slider .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,40,32,.72),rgba(8,40,32,.15) 70%)}
+  .p-slider .h{position:absolute;top:34px;left:16px;width:60%;height:13px;border-radius:5px;background:#fff;z-index:2}
+  .p-slider .h2{position:absolute;top:54px;left:16px;width:42%;height:11px;border-radius:5px;background:var(--water-light);z-index:2}
+  .p-slider .ar{position:absolute;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:rgba(8,40,32,.5);border:1px solid rgba(255,255,255,.4);z-index:2}
+  .p-slider .ar.l{left:10px}.p-slider .ar.r{right:10px}
+  .p-slider .ar svg{width:13px;height:13px;color:#fff;position:absolute;top:5px;left:5px}
+  .p-slider .dots{position:absolute;bottom:34px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:2}
+  .p-slider .dots span{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.5)}
+  .p-slider .dots span.on{width:18px;background:#fff}
+  .p-slider .card{position:absolute;bottom:6px;left:18px;right:18px;height:22px;border-radius:8px;background:#fff;z-index:3;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
+
+  .v-body{padding:22px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .v-tag{font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--water)}
+  .variant h3{font-size:1.2rem;font-weight:600}
+  .variant p{font-size:.92rem;color:var(--ink-soft);flex:1;font-weight:500}
+  .v-link{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:.92rem;padding:11px 18px;border-radius:999px;background:var(--water-deep);color:var(--foam);transition:background .15s}
+  .v-link:hover{background:var(--water)}
+  .v-link svg{width:16px;height:16px}
+
+  .note{margin:54px 0 64px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px 28px;display:flex;gap:16px;align-items:flex-start}
+  .note .ic{width:42px;height:42px;flex:none;border-radius:13px;background:var(--foam);color:var(--water-deep);display:grid;place-items:center}
+  .note .ic svg{width:22px;height:22px}
+  .note h4{font-family:"Sora";font-size:1.05rem;font-weight:600;margin-bottom:6px}
+  .note p{font-size:.92rem;color:var(--ink-soft);font-weight:500}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:.85rem;color:var(--ink-soft)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  @media(max-width:860px){.grid{grid-template-columns:1fr;margin-top:-44px}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <span class="brand">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="2"/><path d="M4 19c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M4 14c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M9 13l3-4 4 2.5"/></svg></span>
+      <span class="brand-name">Freibad Rodheim<small>Förderverein Rettungsschwimmer e.V.</small></span>
+    </span>
+    <span class="eyebrow"><span class="dot"></span>Entwurf · Relaunch-Ideen</span>
+    <h1>Drei Ideen für eine neue, responsive Website</h1>
+    <p>Vorschläge für einen moderneren Auftritt – mobil-optimiert und mit klarer Struktur. Klick dich durch die Varianten und vergleiche.</p>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true"><path fill="#F7F4EC" d="M0 32c180 30 360 30 540 8s360-40 540-8 180 32 360 22v34H0z"/></svg>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="grid">
+
+      <article class="variant">
+        <a href="freibad-rodheim.html" class="preview p-dark" aria-label="Variante 1 ansehen">
+          <span class="bar"></span><span class="h"></span><span class="h2"></span><span class="btn1"></span><span class="wv"></span><span class="card"></span>
+        </a>
+        <div class="v-body">
+          <span class="v-tag">Variante 1</span>
+          <h3>Tief &amp; ruhig</h3>
+          <p>Türkisfarbener Hero mit Wellenlinie als Signatur, warmer Sandton. Sachlich und elegant.</p>
+          <a href="freibad-rodheim.html" class="v-link">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="variant">
+        <a href="freibad-rodheim-hell.html" class="preview p-light" aria-label="Variante 2 ansehen">
+          <span class="sun"></span><span class="h"></span><span class="h2"></span><span class="btn1"></span><span class="card"></span>
+        </a>
+        <div class="v-body">
+          <span class="v-tag">Variante 2</span>
+          <h3>Hell &amp; sonnig</h3>
+          <p>Lichtdurchfluteter Foto-Hero mit schwebender „Heute geöffnet"-Karte. Freundlich und einladend.</p>
+          <a href="freibad-rodheim-hell.html" class="v-link">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="variant">
+        <a href="freibad-rodheim-slider.html" class="preview p-slider" aria-label="Variante 3 ansehen">
+          <span class="scrim"></span><span class="h"></span><span class="h2"></span>
+          <span class="ar l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span>
+          <span class="ar r"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+          <span class="dots"><span class="on"></span><span></span><span></span><span></span><span></span></span>
+          <span class="card"></span>
+        </a>
+        <div class="v-body">
+          <span class="v-tag">Variante 3</span>
+          <h3>Foto-Slider</h3>
+          <p>Vollbild-Karussell mit den echten Freibad-Fotos plus Galerie. Lebendig und bildstark.</p>
+          <a href="freibad-rodheim-slider.html" class="v-link">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></span>
+      <div>
+        <h4>Hinweis</h4>
+        <p>Unverbindliche Gestaltungsentwürfe. Texte und Bilder sind Platzhalter bzw. übernommen vom aktuellen Auftritt; alle Buttons sind in den Entwürfen noch ohne Funktion. Variante 3 lädt die Fotos live – ist je nach Hosting der Bild-Server ein echtes Foto evtl. nicht sichtbar.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 · Design-Entwürfe Freibad Rodheim</span>
+    <span>Förderverein Rettungsschwimmer e.V.</span>
+  </div>
+</footer>
+
+</body>
+</html>

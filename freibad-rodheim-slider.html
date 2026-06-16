@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Freibad Rodheim · Förderverein Rettungsschwimmer e.V.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --water-deep:#0E5F4A;--water:#1D9E75;--water-light:#5DCAA5;--foam:#E4F5EE;
+    --sun:#F0A22A;--sun-deep:#C9821A;--sand:#F7F4EC;--paper:#fff;
+    --ink:#10332B;--ink-soft:#41594F;--line:rgba(16,51,43,.12);
+    --radius:14px;--radius-lg:22px;--maxw:1140px;
+    --shadow-sm:0 1px 2px rgba(16,51,43,.06);--shadow:0 18px 40px -22px rgba(16,51,43,.45);
+    --shadow-card:0 24px 60px -26px rgba(16,51,43,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--sand);line-height:1.65;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.brand-name{font-family:"Sora",sans-serif;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:22px}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+  header{position:sticky;top:0;z-index:60;background:rgba(247,244,236,.85);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;height:68px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:600}
+  .brand .mark{width:38px;height:38px;border-radius:50%;flex:none;background:var(--water);color:var(--foam);display:grid;place-items:center}
+  .brand .mark svg{width:21px;height:21px}
+  .brand-name{font-size:1.05rem;font-weight:600}
+  .brand small{display:block;font-family:"Inter";font-size:.7rem;font-weight:500;color:var(--ink-soft);letter-spacing:.02em}
+  .menu{display:flex;align-items:center;gap:26px}
+  .menu a{font-size:.93rem;font-weight:500;color:var(--ink-soft);transition:color .15s}
+  .menu a:hover,.menu a:focus-visible{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:.92rem;padding:11px 20px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s,background .15s;white-space:nowrap}
+  .btn:active{transform:translateY(1px)}
+  .btn-sun{background:var(--sun);color:#3a2602;box-shadow:0 8px 18px -10px var(--sun)}
+  .btn-sun:hover{background:var(--sun-deep)}
+  .btn-foam{background:var(--foam);color:var(--water-deep)}
+  .btn-foam:hover{background:#d2efe5}
+  .btn-white{background:#fff;color:var(--water-deep);box-shadow:var(--shadow-sm)}
+  .btn-white:hover{background:#f0fafd}
+  .btn-outline{border-color:var(--line);color:var(--ink)}
+  .btn-outline:hover{background:#fff}
+  .burger{display:none;background:none;border:0;cursor:pointer;color:var(--ink);padding:6px}
+  .burger svg{width:26px;height:26px}
+
+  /* ---------- slider hero ---------- */
+  .hero{position:relative}
+  .slider{position:relative;height:min(82vh,680px);min-height:440px;overflow:hidden;background:linear-gradient(135deg,#5DCAA5,#0E5F4A)}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity .9s ease;background:linear-gradient(135deg,#5DCAA5,#0E5F4A)}
+  .slide.is-active{opacity:1}
+  .slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-scrim{position:absolute;inset:0;z-index:3;background:linear-gradient(90deg,rgba(8,40,32,.78) 0%,rgba(8,40,32,.42) 42%,rgba(8,40,32,.12) 75%),linear-gradient(0deg,rgba(8,40,32,.55),transparent 45%);pointer-events:none}
+  .hero-content{position:absolute;z-index:5;inset:0;display:flex;align-items:center;pointer-events:none}
+  .hero-content .wrap{width:100%;pointer-events:auto}
+  .hero-inner{max-width:600px;color:#fff}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 16px;font-size:.8rem;font-weight:600;letter-spacing:.03em;color:#fff;margin-bottom:20px;backdrop-filter:blur(4px)}
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 4px rgba(240,162,42,.3)}
+  .hero h1{font-size:clamp(2.4rem,6.5vw,4.2rem);font-weight:700;line-height:1.04;text-shadow:0 2px 20px rgba(0,0,0,.25)}
+  .hero p{margin-top:18px;font-size:clamp(1.02rem,2.3vw,1.22rem);color:#e2f3ec;max-width:470px;font-weight:500;text-shadow:0 1px 12px rgba(0,0,0,.3)}
+  .hero .cta-row{display:flex;flex-wrap:wrap;gap:13px;margin-top:28px}
+  .caption{position:absolute;left:0;bottom:26px;z-index:5;width:100%;pointer-events:none}
+  .caption .wrap{display:flex;justify-content:flex-end}
+  .caption .pill{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;background:rgba(8,40,32,.55);border:1px solid rgba(255,255,255,.2);color:#eafaf3;font-size:.82rem;font-weight:500;padding:8px 15px;border-radius:999px;backdrop-filter:blur(6px)}
+  .caption .pill svg{width:15px;height:15px;flex:none;color:var(--water-light)}
+  .nav-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(8,40,32,.4);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);transition:background .15s,transform .15s}
+  .nav-btn:hover{background:rgba(8,40,32,.7)}
+  .nav-btn:active{transform:translateY(-50%) scale(.93)}
+  .nav-btn svg{width:22px;height:22px}
+  .nav-btn.prev{left:18px}.nav-btn.next{right:18px}
+  .dots{position:absolute;left:0;right:0;bottom:84px;z-index:6;display:flex;justify-content:center;gap:9px}
+  .dots button{width:9px;height:9px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.45);cursor:pointer;transition:width .2s,background .2s}
+  .dots button[aria-current="true"]{width:26px;background:#fff}
+
+  /* ---------- floating status ---------- */
+  .float{position:relative;z-index:30;margin-top:-58px}
+  .status-card{background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow-card);border:1px solid var(--line);padding:10px;display:grid;grid-template-columns:1.1fr 1fr 1.1fr auto;gap:6px}
+  .scell{display:flex;flex-direction:column;justify-content:center;padding:16px 22px;gap:3px}
+  .scell+.scell{border-left:1px solid var(--line)}
+  .scell .k{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em}
+  .scell .k svg{width:16px;height:16px;color:var(--water)}
+  .scell .v{font-family:"Sora";font-size:1.4rem;font-weight:600;color:var(--ink);line-height:1.1}
+  .scell .v.open{color:#2E8B2E;display:flex;align-items:center;gap:9px}
+  .scell .v.open .live{width:11px;height:11px;border-radius:50%;background:#37A337;position:relative}
+  .scell .v.open .live::after{content:"";position:absolute;inset:0;border-radius:50%;background:#37A337;animation:ping 1.9s ease-out infinite}
+  @keyframes ping{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+  .scell .sub{font-size:.82rem;color:var(--ink-soft);font-weight:500}
+  .scell.cta{justify-content:center;padding:10px;border-left:1px solid var(--line)}
+  .scell.cta .btn{height:100%;justify-content:center}
+
+  section.block{padding:74px 0}
+  .kicker{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--water);margin-bottom:12px}
+  .block h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600}
+
+  /* welcome */
+  .welcome-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+  .welcome p.lead{color:var(--ink-soft);font-size:1.06rem;margin-top:16px;font-weight:500}
+  .features{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:6px}
+  .feat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+  .feat .ic{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;margin-bottom:12px;background:var(--foam);color:var(--water-deep)}
+  .feat .ic svg{width:22px;height:22px}
+  .feat h3{font-size:1.08rem;font-weight:600;margin-bottom:4px}
+  .feat p{font-size:.9rem;color:var(--ink-soft);font-weight:500}
+
+  /* gallery */
+  .gallery{background:#fff}
+  .gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+  .gal-grid figure{position:relative;aspect-ratio:1;border-radius:var(--radius);overflow:hidden;background:linear-gradient(135deg,#5DCAA5,#0E5F4A)}
+  .gal-grid img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .gal-grid figure:hover img{transform:scale(1.06)}
+  .gal-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:18px 12px 10px;font-size:.78rem;font-weight:500;color:#fff;background:linear-gradient(0deg,rgba(8,40,32,.7),transparent)}
+
+  /* news */
+  .news{background:var(--sand)}
+  .news-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card .top{height:120px;display:grid;place-items:center}
+  .card .top svg{width:42px;height:42px}
+  .c-green{background:#dff1c6;color:#3B6D11}.c-blue{background:#d6e8fb;color:#185FA5}.c-sun{background:#fbe6c0;color:#9A6410}
+  .card .body{padding:20px;display:flex;flex-direction:column;gap:7px;flex:1}
+  .card .date{font-size:.78rem;font-weight:600;color:var(--water);text-transform:uppercase;letter-spacing:.02em}
+  .card h3{font-size:1.16rem;font-weight:600}
+  .card p{font-size:.92rem;color:var(--ink-soft);flex:1;font-weight:500}
+  .card .more{font-size:.88rem;font-weight:600;color:var(--water-deep);display:inline-flex;align-items:center;gap:6px}
+  .card .more svg{width:15px;height:15px;transition:transform .15s}
+  .card:hover .more svg{transform:translateX(3px)}
+
+  /* support */
+  .support{background:var(--ink);color:var(--foam)}
+  .support-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:46px;align-items:center}
+  .support h2{color:#fff}
+  .support p{color:#bfd9cf;margin-top:14px;font-size:1.04rem;font-weight:500}
+  .support .cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .iban-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-lg);padding:26px}
+  .iban-card .label{font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--water-light)}
+  .iban-card .iban{font-family:"Sora";font-size:1.26rem;font-weight:600;color:#fff;margin-top:8px;word-spacing:.1em}
+  .iban-card .note{font-size:.85rem;color:#bfd9cf;margin-top:12px;display:flex;gap:8px;align-items:flex-start;font-weight:500}
+  .iban-card .note svg{width:16px;height:16px;flex:none;margin-top:2px;color:var(--sun)}
+
+  footer{background:var(--sand);padding:54px 0 28px;border-top:1px solid var(--line)}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px}
+  .foot-grid h4{font-size:.82rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px;font-family:"Inter"}
+  .foot-grid a,.foot-grid address{display:block;color:var(--ink-soft);font-size:.94rem;font-style:normal;line-height:1.9;font-weight:500}
+  .foot-grid a:hover{color:var(--ink)}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:40px;padding-top:22px;border-top:1px solid var(--line);font-size:.85rem;color:var(--ink-soft)}
+  .foot-bottom .links{display:flex;gap:18px;flex-wrap:wrap}
+
+  @media(max-width:920px){
+    .welcome-grid,.support-grid{grid-template-columns:1fr;gap:34px}
+    .gal-grid{grid-template-columns:1fr 1fr}
+    .cards,.foot-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:760px){
+    .menu{position:fixed;inset:68px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;background:var(--sand);border-bottom:1px solid var(--line);padding:8px 22px 20px;transform:translateY(-135%);transition:transform .28s ease;box-shadow:var(--shadow)}
+    .menu.open{transform:translateY(0)}
+    .menu a{padding:13px 4px;border-bottom:1px solid var(--line);font-size:1rem}
+    .menu .btn{margin-top:14px;justify-content:center}
+    .burger{display:block}
+    .nav-btn{width:40px;height:40px}
+    .dots{bottom:74px}
+    .float{margin-top:-44px}
+    .status-card{grid-template-columns:1fr 1fr}
+    .scell:nth-child(odd){border-left:0}
+    .scell:nth-child(n+3){border-top:1px solid var(--line)}
+    .scell.cta{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:14px}
+    .features{grid-template-columns:1fr}
+    section.block{padding:54px 0}
+    .cards,.foot-grid{grid-template-columns:1fr}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.slide{transition:none!important}}
+  :focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand" aria-label="Freibad Rodheim Startseite">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="2"/><path d="M4 19c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M4 14c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M9 13l3-4 4 2.5"/></svg></span>
+      <span class="brand-name">Freibad Rodheim<small>Förderverein Rettungsschwimmer e.V.</small></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Hauptnavigation">
+      <a href="#bad">Das Bad</a><a href="#galerie">Galerie</a><a href="#aktuelles">Aktuelles</a><a href="#kontakt">Kontakt</a>
+      <a href="#unterstuetzen" class="btn btn-sun">Mitglied werden</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="slider" id="slider" role="region" aria-roledescription="Bilderkarussell" aria-label="Eindrücke aus dem Freibad">
+      <figure class="slide is-active" data-caption="Das schönste Freibad der Wetterau">
+        <img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/3/8/Freibad_3.jpg?v=1757474270" alt="Blick über das Freibad Rodheim" referrerpolicy="no-referrer" fetchpriority="high">
+      </figure>
+      <figure class="slide" data-caption="Nichtschwimmerbereich mit großer 3-fach-Rutsche">
+        <img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/4/0/Freibad_Nichtschwimmerbereich.jpg?v=1757474270" alt="Nichtschwimmerbereich mit großer 3-fach-Rutsche" referrerpolicy="no-referrer" loading="lazy">
+      </figure>
+      <figure class="slide" data-caption="Schwimmerbereich mit Sprunganlage">
+        <img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/4/1/Freibad_2.jpg?v=1757474270" alt="Schwimmerbereich mit Sprunganlage" referrerpolicy="no-referrer" loading="lazy">
+      </figure>
+      <figure class="slide" data-caption="Planschbecken mit Sonnensegel und Strandkörben">
+        <img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/3/9/Freibad_Planschbecken-1.jpg?v=1757474270" alt="Planschbecken mit Sonnensegel und Strandkörben" referrerpolicy="no-referrer" loading="lazy">
+      </figure>
+      <figure class="slide" data-caption="Sprungturm">
+        <img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/4/2/20240624_3er.jpg?v=1757474270" alt="Sprungturm im Freibad" referrerpolicy="no-referrer" loading="lazy">
+      </figure>
+
+      <div class="hero-scrim"></div>
+
+      <div class="hero-content">
+        <div class="wrap">
+          <div class="hero-inner">
+            <span class="eyebrow"><span class="dot"></span>Saison 2026 · seit 15. Mai geöffnet</span>
+            <h1>Das schönste Freibad der Wetterau</h1>
+            <p>Solarbeheizt, familienfreundlich, mit altem Baumbestand und Strandkörben – mitten in Rodheim vor der Höhe.</p>
+            <div class="cta-row">
+              <a href="#" class="btn btn-sun"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Tickets kaufen</a>
+              <a href="#" class="btn btn-white">Öffnungszeiten &amp; Preise</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="caption"><div class="wrap"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span id="capText">Das schönste Freibad der Wetterau</span></span></div></div>
+
+      <button class="nav-btn prev" id="prev" aria-label="Vorheriges Bild"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button class="nav-btn next" id="next" aria-label="Nächstes Bild"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      <div class="dots" id="dots" role="tablist" aria-label="Bild auswählen"></div>
+    </div>
+  </section>
+
+  <div class="wrap float">
+    <h2 class="sr-only">Aktueller Status des Freibads</h2>
+    <div class="status-card">
+      <div class="scell">
+        <span class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Heute</span>
+        <span class="v open"><span class="live"></span>Geöffnet</span><span class="sub">10:00 – 19:00 Uhr</span>
+      </div>
+      <div class="scell">
+        <span class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V4a2 2 0 0 0-4 0v10.76a4 4 0 1 0 4 0z"/></svg>Wasser</span>
+        <span class="v">22,0°</span><span class="sub">Stand 14.06., 10 Uhr</span>
+      </div>
+      <div class="scell">
+        <span class="k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Nächstes Event</span>
+        <span class="v" style="font-size:1.2rem">Kinderfest</span><span class="sub">Fr 20.06. ab 13 Uhr</span>
+      </div>
+      <div class="scell cta"><a href="#" class="btn btn-sun">Tickets kaufen</a></div>
+    </div>
+  </div>
+
+  <section class="block" id="bad">
+    <div class="wrap welcome-grid">
+      <div class="welcome">
+        <p class="kicker">Herzlich willkommen</p>
+        <h2>Schöne Stunden im schönsten Ambiente</h2>
+        <p class="lead">Entspannen zwischen altem Baumbestand, Strandkörben und Sonnenliegen – ein familienfreundliches Bad mit Flair, gehegt und gepflegt vom Förderverein.</p>
+      </div>
+      <div class="features">
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div><h3>Solarbeheizt</h3><p>Angenehmes Wasser ohne fossile Energie.</p></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-3a8 8 0 0 1 16 0v3M2 20h20M9 8l3-3 3 3"/></svg></div><h3>Kinderbecken</h3><p>Elefantenrutsche, Wasserspeier – Schaukel ab 2026.</p></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg></div><h3>Sprung &amp; Rutsche</h3><p>Sprunganlage und große 3-fach-Rutsche.</p></div>
+        <div class="feat"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg></div><h3>Alter Baumbestand</h3><p>Schattige Plätze im Grünen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block gallery" id="galerie">
+    <div class="wrap">
+      <p class="kicker">Galerie</p>
+      <h2>Ein paar Eindrücke</h2>
+      <div class="gal-grid">
+        <figure><img src="https://daten.verwaltungsportal.de/dateien//mypage/3/9/6/1/9/7/7/20240624_Planschbecken.jpg?v=1781453295" alt="Planschbecken" referrerpolicy="no-referrer" loading="lazy"><figcaption>Planschbecken</figcaption></figure>
+        <figure><img src="https://daten.verwaltungsportal.de/dateien//mypage/3/9/6/1/9/7/6/Rutsche_1.jpg?v=1781453295" alt="Rutsche" referrerpolicy="no-referrer" loading="lazy"><figcaption>Rutsche</figcaption></figure>
+        <figure><img src="https://daten.verwaltungsportal.de/dateien//mypage/3/9/6/1/9/7/5/Tischtennisplatten.jpg?v=1781453295" alt="Tischtennisplatten" referrerpolicy="no-referrer" loading="lazy"><figcaption>Tischtennis</figcaption></figure>
+        <figure><img src="https://daten.verwaltungsportal.de/dateien//mypage/3/3/6/6/1/4/2/20240624_3er.jpg?v=1757474270" alt="Sprungturm" referrerpolicy="no-referrer" loading="lazy"><figcaption>Sprungturm</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block news" id="aktuelles">
+    <div class="wrap">
+      <div class="news-head">
+        <div><p class="kicker">Aktuelles</p><h2>Was gerade los ist</h2></div>
+        <a href="#" class="btn btn-outline">Alle Meldungen</a>
+      </div>
+      <div class="cards">
+        <article class="card"><div class="top c-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6" r="3"/><path d="M12 9v6M6 21l6-6 6 6M4 14c2.7-2 5.3-2 8-2s5.3 0 8 2"/></svg></div><div class="body"><span class="date">Fr 20.06.</span><h3>Kinderfest mit Spieleparcours</h3><p>Ab 13 Uhr wird gespielt, geplanscht und gefeiert – für die ganze Familie.</p><a href="#" class="more">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="card"><div class="top c-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M7 10.5V16c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-5.5M21 8v5"/></svg></div><div class="body"><span class="date">Jetzt buchbar</span><h3>Schwimmkurse 2026</h3><p>Anfänger- und Aufbaukurse für Kinder sind ab sofort online buchbar.</p><a href="#" class="more">Kurs sichern <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+        <article class="card"><div class="top c-sun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5a4 4 0 0 0-7-2.6A4 4 0 0 0 7 9c0 1.5.5 3.5 2 5l5 5z"/></svg></div><div class="body"><span class="date">Spendenaufruf</span><h3>Mittwochs-Öffnung sichern</h3><p>Mit Ihrer Spende halten wir das Bad auch mittwochs für alle geöffnet.</p><a href="#unterstuetzen" class="more">Jetzt spenden <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block support" id="unterstuetzen">
+    <div class="wrap support-grid">
+      <div>
+        <p class="kicker" style="color:var(--water-light)">Verein &amp; Förderung</p>
+        <h2>Ohne den Förderverein kein Freibad</h2>
+        <p>Wir sind die Bürgerinitiative zur Erhaltung des Bades. Werden Sie Mitglied oder unterstützen Sie uns als Sponsor – jeder Beitrag fließt direkt ins Bad.</p>
+        <div class="cta-row"><a href="#" class="btn btn-sun">Mitglied werden</a><a href="#" class="btn btn-foam">Als Sponsor unterstützen</a></div>
+      </div>
+      <div class="iban-card">
+        <span class="label">Direkt spenden</span>
+        <div class="iban">DE03 5139 0000 0033 3039 04</div>
+        <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>Verwendungszweck „Mittwochsöffnung" – so kommt Ihre Spende dort an, wo sie gebraucht wird.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="brand" style="margin-bottom:14px"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="6" r="2"/><path d="M4 19c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M4 14c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 4.5 0M9 13l3-4 4 2.5"/></svg></span><span class="brand-name">Freibad Rodheim<small>Förderverein Rettungsschwimmer e.V.</small></span></span>
+        <p style="color:var(--ink-soft);font-size:.94rem;max-width:300px;font-weight:500">Das schönste Freibad der Wetterau – getragen vom Engagement der Bürgerinnen und Bürger.</p>
+      </div>
+      <div><h4>Verein</h4><a href="#">Ziele &amp; Satzung</a><a href="#">Vorstand</a><a href="#">Mitgliederversammlung</a><a href="#">Chronik &amp; Galerie</a></div>
+      <div><h4>Kontakt</h4><address>Wetteraustr. 18<br>61191 Rosbach von der Höhe</address><a href="#" style="margin-top:8px">Anfahrt &amp; Karte</a><a href="#">Wetter in Rodheim</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Förderverein Rettungsschwimmer e.V.</span><div class="links"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">Intranet</a></div></div>
+  </div>
+</footer>
+
+<script>
+  const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+  burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Menü schließen':'Menü öffnen');});
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.setAttribute('aria-expanded','false');}));
+
+  (function(){
+    const slider=document.getElementById('slider');
+    const slides=[...slider.querySelectorAll('.slide')];
+    const dotsWrap=document.getElementById('dots');
+    const capText=document.getElementById('capText');
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i=0,timer=null;
+
+    slides.forEach((s,n)=>{
+      const b=document.createElement('button');
+      b.setAttribute('role','tab');
+      b.setAttribute('aria-label','Bild '+(n+1)+' von '+slides.length);
+      b.setAttribute('aria-current',n===0?'true':'false');
+      b.addEventListener('click',()=>{go(n);restart();});
+      dotsWrap.appendChild(b);
+    });
+    const dots=[...dotsWrap.children];
+
+    function go(n){
+      slides[i].classList.remove('is-active');
+      dots[i].setAttribute('aria-current','false');
+      i=(n+slides.length)%slides.length;
+      slides[i].classList.add('is-active');
+      dots[i].setAttribute('aria-current','true');
+      capText.textContent=slides[i].dataset.caption;
+    }
+    function next(){go(i+1);} function prev(){go(i-1);}
+    function start(){if(!reduce)timer=setInterval(next,5000);}
+    function stop(){if(timer){clearInterval(timer);timer=null;}}
+    function restart(){stop();start();}
+
+    document.getElementById('next').addEventListener('click',()=>{next();restart();});
+    document.getElementById('prev').addEventListener('click',()=>{prev();restart();});
+
+    slider.addEventListener('mouseenter',stop);
+    slider.addEventListener('mouseleave',start);
+    slider.addEventListener('focusin',stop);
+    slider.addEventListener('focusout',start);
+    slider.setAttribute('tabindex','0');
+    slider.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'){next();restart();}
+      if(e.key==='ArrowLeft'){prev();restart();}
+    });
+
+    let sx=0;
+    slider.addEventListener('touchstart',e=>{sx=e.changedTouches[0].clientX;stop();},{passive:true});
+    slider.addEventListener('touchend',e=>{
+      const dx=e.changedTouches[0].clientX-sx;
+      if(Math.abs(dx)>40){dx<0?next():prev();}
+      start();
+    },{passive:true});
+
+    start();
+  })();
+</script>
+</body>
+</html>
